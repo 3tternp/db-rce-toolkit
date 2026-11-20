@@ -28,9 +28,9 @@ Read-only scripts that show whether a host runs a database engine exposed to the
 
 | Engine | Identifier | Flaw | Needs |
 |---|---|---|---|
-| 🐘 **PostgreSQL** | CVE-2026-116331 | Type confusion in min/max aggregate optimisation (user aggregate with `SORTOP`) — CVSS 8.8 | Any login role that can create objects (default `TEMPORARY` privilege) |
+| 🐘 **PostgreSQL** | CVE-2026-116331 | Type confusion in min/max aggregate optimisation (user aggregate with `SORTOP`) CVSS 8.8 | Any login role that can create objects (default `TEMPORARY` privilege) |
 | 🐬 **MySQL** | CVE-2026-101786 | Query-optimiser memory flaw | Account that can create temporary tables |
-| 🏛️ **Oracle Database** | CVE-2026-114819 | Oracle Text flaw — **CVSS 9.9** | Chained with ORDS: **no login** |
+| 🏛️ **Oracle Database** | CVE-2026-114819 | Oracle Text flaw **CVSS 9.9** | Chained with ORDS: **no login** |
 | 🌐 **Oracle REST Data Services** | CVE-2026-91609 | GraphQL interface flaw | Exposed ORDS endpoint |
 | 🖱️ **ClickHouse** | *no CVE, no confirmed fix* | Integer-overflow write with `format_binary_max_string_size = 0` | Authenticated user who can change that setting |
 
@@ -147,7 +147,7 @@ Finds PostgreSQL, MySQL/MariaDB, Oracle (registry homes, `sqlplus -V`), ORDS and
 | Verdict | Meaning | Action |
 |---|---|---|
 | ✅ `PATCHED` | PostgreSQL is at or above the fixed minor release (or the changelog names the CVE) | None |
-| 🟢 `OUTSIDE-RANGE` | MySQL, Oracle or ORDS version is above the advisory's affected range | Confirm the Oracle CPU in the home (`opatch lspatches`) — exact fixed builds were not published |
+| 🟢 `OUTSIDE-RANGE` | MySQL, Oracle or ORDS version is above the advisory's affected range | Confirm the Oracle CPU in the home (`opatch lspatches`) exact fixed builds were not published |
 | ❌ `VULNERABLE` | Version is in the affected range or below the fixed release | Patch and restart |
 | 🔁 `RESTART-REQUIRED` | Fixed binary on disk, old process still running | Restart the service |
 | 🛑 `UNSUPPORTED` | End-of-life PostgreSQL branch with no fix | Upgrade to a supported branch |
@@ -191,7 +191,7 @@ REVOKE CREATE TEMPORARY TABLES ON appdb.* FROM 'report_user'@'%';
 ```
 
 ```xml
-<!-- 🖱️ ClickHouse users.xml profile — Vairav interim suggestion, not vendor guidance; test first -->
+<!-- 🖱️ ClickHouse users.xml profile Vairav interim suggestion, not vendor guidance; test first -->
 <profiles><default><constraints>
   <format_binary_max_string_size><readonly/></format_binary_max_string_size>
 </constraints></default></profiles>
@@ -240,8 +240,8 @@ sha256sum -c SHA256SUMS.txt
 | 🐍 Python | Run against simulated PostgreSQL, MySQL, MariaDB, Oracle (`sqlplus -V`), ORDS and ClickHouse binaries across vulnerable and patched versions, listening sockets and a planted log entry |
 | 🐧 Bash | Same scenarios as Python; output and exit codes matched |
 | 🐘 PostgreSQL SQL checks | **Run against a live PostgreSQL 16 server** in both scripts: correctly flagged PUBLIC `TEMPORARY`, explicit grants and a user aggregate with `SORTOP` |
-| 🐬 MySQL / 🖱️ ClickHouse SQL checks | Tested only against stand-in clients returning canned output — **not validated on real servers** |
-| 🪟 PowerShell | **Syntax-reviewed only** — not executed. Test on one Windows host before wide use |
+| 🐬 MySQL / 🖱️ ClickHouse SQL checks | Tested only against stand-in clients returning canned output **not validated on real servers** |
+| 🪟 PowerShell | **Syntax-reviewed only** not executed. Test on one Windows host before wide use |
 | 🏛️ Oracle / ORDS | Version logic tested with simulated `sqlplus` / `ords` output; not run against real Oracle homes |
 
 ---
